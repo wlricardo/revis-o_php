@@ -8,11 +8,6 @@
 </head>
 
 <body>
-    <h1><?php echo "Título dentro do H1 <br>"; ?></h1>
-    <h1>Estamos em <?php echo date('Y'); ?></h1>
-    <p>
-        Agora são <?php echo date('H'); ?> horas e <?php echo date('i'); ?> minutos.
-    </p>
 
     <!-- FUNÇÕES DEFINIDAS -->
 
@@ -20,18 +15,25 @@
     // FUNÇÃO PARA INSERIR NOVA LINHA 
     function linha($semana)
     {
+        $today = date('d');
         echo "<tr>";
         for ($i = 0; $i <= 6; $i++) {
             if (isset($semana[$i])) {
-                echo "<td>{$semana[$i]}</td>";
+                if ($semana[$i] == $today) {
+                    echo "<td>" . aplicar_negrito($today) . "</td>";
+                } elseif ($i == 0 || $i == 6) {
+                    echo "<td>" . destacar_fim_de_semana($semana[$i]) . "</td>";
+                } else {
+                    echo "<td>{$semana[$i]}</td>";
+                }
             } else {
-                echo "<tr></tr>";
+                echo "<td></td>";
             }
         }
         echo "</tr>";
     }
 
-    // FUNÇÃO PARA DESENHA O CALENDÁRIO
+    // FUNÇÃO PARA DESENHAR O CALENDÁRIO
     function calendario()
     {
         $dia = 1;
@@ -46,7 +48,38 @@
         }
         linha($semana);
     }
+
+    // EXIBE A SAUDAÇÃO EM FUNÇÃO DO HORÁRIO DO DIA
+    function saudacao_em_funcao_da_hora(int $hora)
+    {
+        if ($hora < 12) {
+            return "Bom dia !";
+        } elseif ($hora < 18) {
+            return "Boa tarde !";
+        } else {
+            return "Boa noite !";
+        }
+    }
+
+    // FUNÇÃO PARA APLICAR NEGRITO À DATA ATUAL
+    function aplicar_negrito(int $dia)
+    {
+        return "<strong style='color:orange'>" . $dia . "</strong>";
+    }
+
+    // FUNÇÃO PARA DESTACAR SÁBADOS E DOMINGOS
+    function destacar_fim_de_semana(int $dia)
+    {
+        return "<span style='color: red; font-weight: bold;'>" . $dia . "</span>";
+    }
     ?>
+
+    <h1><?php echo "Revisão HTML e PHP"; ?></h1>
+    <h1>Estamos em <?php echo date('Y'); ?></h1>
+    <p>
+        <?php echo saudacao_em_funcao_da_hora(date('H')); ?>
+        Agora são <?php echo date('H'); ?> horas e <?php echo date('i'); ?> minutos.
+    </p>
 
     <table border="1">
         <tr>
