@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 
-
 <?php
 /** Como desejamos que as tarefas sejam empilhadas a cada nova inserção,
  *  precisamos criar uma seção para que uma variável especial (variável de
