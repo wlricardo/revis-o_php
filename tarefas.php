@@ -1,6 +1,5 @@
-<!DOCTYPE html>
-
 <?php
+
 /** Como desejamos que as tarefas sejam empilhadas a cada nova inserção,
  *  precisamos criar uma seção para que uma variável especial (variável de
  *  seção) esteja presente a cada nova requisição do formulário, o seja, 
@@ -8,55 +7,32 @@
  *  na tabela, se a seção PHP estiver aberta.
  */
 session_start();
-?>
 
-<html lang="pt-BR">
+$tarefa = array();
+if (isset($_GET['nome']) && $_GET['nome'] != '') {
+    $tarefa['nome'] = $_GET['nome'];
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cap. 04 : Gerenciador de tarefas</title>
-</head>
-
-<body>
-    <h1>Gerenciador de tarefas</h1>
-    <form action="#">
-        <fieldset> <!-- CRIA UMA MOLDURA EM VOLTA DO FORMULÁRIO -->
-            <legend>Nova tarefa</legend> <!-- NOME DA SEÇÃO DO FIELDSET -->
-            <label for="tarefa">Tarefa:
-                <input type="text" name="tarefa" id="tarefa">
-            </label>
-            <input type="submit" value="Cadastrar">
-        </fieldset>
-    </form>
-
-    <?php   // TESTE PARA EXIBIR A PALAVRA INFORMADA
-
-    if (isset($_GET['tarefa'])) {
-        $_SESSION['lista_de_tarefas'][] = $_GET['tarefa'];
+    if (isset($_GET['descricao'])) {
+        $tarefa['descricao'] = $_GET['descricao'];
+    } else {
+        $tarefa['descricao'] = '';
     }
 
-    $lista_de_tarefas = array();
-
-    if (isset($_SESSION['lista_de_tarefas'])) {
-        $lista_de_tarefas = $_SESSION['lista_de_tarefas'];
+    if (isset($_GET['prazo'])) {
+        $tarefa['prazo'] = $_GET['prazo'];
+    } else {
+        $tarefa['prazo'] = '';
     }
-    ?>
 
-    <table>
-        <tr>
-            <th>Tarefas cadastradas:</th>
-        </tr>
+    $tarefa['prioridade'] = $_GET['prioridade'];
 
-        <!-- EXBE AS TAREFAS CADASTRADAS POR MEIO DE UM 'foreach' 
-             DE FORMA REVERSA, OU SEJA, INICIANDO DO ÚLTIMO  A SER
-             ACRESCENTADO À LISTA -->
-        <?php foreach (array_reverse($lista_de_tarefas) as $tarefa) : ?>
-            <tr>
-                <td><?php echo $tarefa; ?></td>
-            </tr>
-        <?php endforeach; ?>
-    </table>
-</body>
+    if (isset($_GET['concluido'])) {
+        $tarefa['concluido'] = $_GET['concluido'];
+    } else {
+        $tarefa['concluido'] = '';
+    }
 
-</html>
+    $_SESSION['lista_de_tarefas'][] = $tarefa;
+}
+
+include "template.php";
