@@ -8,9 +8,9 @@
  */
 session_start();
 
-$tarefa = array();
-if (isset($_GET['nome']) && $_GET['nome'] != '') {
-    $tarefa['nome'] = $_GET['nome'];
+$tarefa = array(); // CADA TAREFA, COMPOSTA POR 'nome', 'descricao', ETC, SERÁ ARMAZENADA EM UMA array
+if (isset($_GET['nome']) && $_GET['nome'] != '') { 
+    $tarefa['nome'] = $_GET['nome'];               
 
     if (isset($_GET['descricao'])) {
         $tarefa['descricao'] = $_GET['descricao'];
@@ -32,7 +32,8 @@ if (isset($_GET['nome']) && $_GET['nome'] != '') {
         $tarefa['concluido'] = '';
     }
 
-    $_SESSION['lista_de_tarefas'][] = $tarefa;
-}
+    $_SESSION['lista_de_tarefas'][] = $tarefa; // APOS ATRIBUIR CADA VALOR AO ARRAY '$tarefa', ESTE SERÁ
+}                                              // ADICIONADO À VARIÁVEL GLOBAL DA SESSION.
 
-include "template.php";
+include "template.php"; // FAZ A LIGAÇÃO ENTRE OS ARQUIVOS DO PROJETO, OU SEJA,
+                        // $_SESSION['lista_de_tarefas'][] SERÁ USADA NO TEMPLATE

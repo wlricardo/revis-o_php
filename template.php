@@ -55,10 +55,8 @@
              DE FORMA REVERSA, OU SEJA, INICIANDO DO ÚLTIMO  A SER
              ACRESCENTADO À LISTA -->
 
-        <!-- Recupera as tarefas da sessão, ou array vazio se não existir -->
-
         <?php
-        $lista_de_tarefas = $_SESSION['lista_de_tarefas'] ?? [];
+        $lista_de_tarefas = $_SESSION['lista_de_tarefas'] ?? [];    // RECUPERA A LISTA DE TAREFAS DA SESSION
         foreach (array_reverse($lista_de_tarefas) as $tarefa) : ?>
             <tr>
                 <td><?php echo $tarefa['nome']; ?></td>
