@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<?php session_start(); ?>
+
 <html lang="pt-BR">
 
 <head>
@@ -24,37 +24,19 @@
             <label for="email">Email:
                 <input type="email" name="email" id="email" required placeholder="Insira seu e-mail">
             </label><br>
+            <label for="descricao">Descrição:
+                <br><textarea name="descricao" id="descricao" rows="5" cols="20"></textarea>
+            </label><br>
+            <label for="nascimento">Data de nascimento:
+                <input type="date" name="nascimento" id="nascimento">
+            </label><br>
+            <label for="favorito">Adicionar aos favoritos ?:
+                <input type="checkbox" name="favorito" id="favorito" value="Sim">
+            </label><br>
 
             <input type="submit" value="Cadastrar">
         </fieldset>
     </form><br>
-
-    <!-- RECEBER OS DADOS DO FORMULÁRIO E ARMAZENAR NA SESSION -->
-    <?php
-    if (isset($_POST['nome']) && isset($_POST['telefone']) && isset($_POST['email'])) {
-        // CRIAÇÃO DE UM CONTATO TEMPORÁRIO PARA ARMAZENAS OS VALORES RECEBEIDO PELO FORM
-        $novo_contato = [
-            'nome' => $_POST['nome'],
-            'telefone' => $_POST['telefone'],
-            'email' => $_POST['email']
-        ];
-
-        /** ARMAZENA CONTATO EM UM ARRAY DA SEÇÃO */
-        $_SESSION['lista_de_contatos'][] = $novo_contato;
-    }
-
-    // CRIAÇÃO DE UMA VARIÁVEL INICIALMENTE VAZIA PARA RECEBER OS VALORES
-    $lista_de_contatos = array();
-
-    /** SE A SEÇÃO EXISTIR, PASSARMOS OS VALORES PARA A VARIÁVEL CRIADA ANTERIORMENTE.
-     *  AO CLICAR NOVAMENTE NO BOTÃO INSERIR, OS VALORES SERÃO ACRESCENTADOS
-     */
-    if (!empty($_SESSION['lista_de_contatos'])) {
-        $lista_de_contatos = $_SESSION['lista_de_contatos'];
-    } else {
-        echo "<tr><td colspan='3'>" . "Nenhum contato cadastrado" . "</td><tr>";
-    }
-    ?>
 
     <!-- TABELA DE CONTATOS CADASTRADOS -->
     <form action="#">
@@ -66,17 +48,31 @@
                         <th>Nome</th>
                         <th>Telefone</th>
                         <th>E-mail</th>
+                        <th>Descrição</th>
+                        <th>Data de nascimento</th>
+                        <th>Favorito ?</th>
                     </tr>
                 </thead>
                 <tbody>
                     <!-- EXIBE OS CONTATOS CADASTRADOS -->
-                    <?php foreach ($lista_de_contatos as $contato):  ?>
+                    <?php
+                    if (!empty($_SESSION['lista_de_contatos'])) {
+                        foreach ($_SESSION['lista_de_contatos'] as $contato): ?>
+                            <tr>
+                                <td><?php echo $contato['nome'] ?></td>
+                                <td><?php echo $contato['telefone'] ?></td>
+                                <td><?php echo $contato['email'] ?></td>
+                                <td><?php echo $contato['descricao'] ?></td>
+                                <td><?php echo $contato['nascimento'] ?></td>
+                                <td><?php echo $contato['favorito'] ?></td>
+                            </tr>
+                        <?php endforeach;
+                    } else { ?>
                         <tr>
-                            <td><?php echo $contato['nome'] ?></td>
-                            <td><?php echo $contato['telefone'] ?></td>
-                            <td><?php echo $contato['email'] ?></td>
+                            <td colspan="6">Nenhum contato cadastrado</td>
                         </tr>
-                    <?php endforeach; ?>
+                    <?php }
+                    ?>
                 </tbody>
             </table>
         </fieldset>
