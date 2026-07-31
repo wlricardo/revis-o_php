@@ -9,28 +9,13 @@
 session_start();
 
 $tarefa = array(); // CADA TAREFA, COMPOSTA POR 'nome', 'descricao', ETC, SERÁ ARMAZENADA EM UMA array
-if (isset($_GET['nome']) && $_GET['nome'] != '') { 
-    $tarefa['nome'] = $_GET['nome'];               
 
-    if (isset($_GET['descricao'])) {
-        $tarefa['descricao'] = $_GET['descricao'];
-    } else {
-        $tarefa['descricao'] = '';
-    }
-
-    if (isset($_GET['prazo'])) {
-        $tarefa['prazo'] = $_GET['prazo'];
-    } else {
-        $tarefa['prazo'] = '';
-    }
-
-    $tarefa['prioridade'] = $_GET['prioridade'];
-
-    if (isset($_GET['concluido'])) {
-        $tarefa['concluido'] = $_GET['concluido'];
-    } else {
-        $tarefa['concluido'] = '';
-    }
+if (isset($_GET['nome']) && $_GET['nome'] != '') {
+    $tarefa['nome'] = $_GET['nome'];
+    $tarefa['descricao'] = $_GET['descricao'] ?? '';
+    $tarefa['prazo'] = $_GET['prazo'] ?? '';
+    $tarefa['prioridade'] = $_GET['prioridade'] ?? 'Baixa';
+    $tarefa['concluido'] = isset($_GET['concluido']) ? 'Sim' : 'Não';
 
     $_SESSION['lista_de_tarefas'][] = $tarefa; // APOS ATRIBUIR CADA VALOR AO ARRAY '$tarefa', ESTE SERÁ
 }                                              // ADICIONADO À VARIÁVEL GLOBAL DA SESSION.

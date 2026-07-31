@@ -42,7 +42,7 @@
     </form>
 
     <br>
-    <table border="1">
+    <table border="1" cellpadding="5">
         <tr>
             <th>Tarefa</th>
             <th>Descrição</th>
@@ -55,17 +55,21 @@
              DE FORMA REVERSA, OU SEJA, INICIANDO DO ÚLTIMO  A SER
              ACRESCENTADO À LISTA -->
 
-        <?php
-        $lista_de_tarefas = $_SESSION['lista_de_tarefas'] ?? [];    // RECUPERA A LISTA DE TAREFAS DA SESSION
-        foreach (array_reverse($lista_de_tarefas) as $tarefa) : ?>
+        <?php if (isset($_SESSION['lista_de_tarefas']) && count($_SESSION['lista_de_tarefas']) > 0) :
+            foreach (array_reverse($_SESSION['lista_de_tarefas']) as $tarefa) : ?>
+                <tr>
+                    <td><?php echo $tarefa['nome']; ?></td>
+                    <td><?php echo $tarefa['descricao']; ?></td>
+                    <td><?php echo $tarefa['prazo']; ?></td>
+                    <td><?php echo $tarefa['prioridade']; ?></td>
+                    <td><?php echo $tarefa['concluido']; ?></td>
+                </tr>
+            <?php endforeach; ?>
+        <?php else: ?>
             <tr>
-                <td><?php echo $tarefa['nome']; ?></td>
-                <td><?php echo $tarefa['descricao']; ?></td>
-                <td><?php echo $tarefa['prazo']; ?></td>
-                <td><?php echo $tarefa['prioridade']; ?></td>
-                <td><?php echo $tarefa['concluido']; ?></td>
+                <td colspan="5" style="text-align: center;">Nenhum dado cadastrado</td>
             </tr>
-        <?php endforeach; ?>
+        <?php endif; ?>
     </table>
 </body>
 
